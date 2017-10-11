@@ -5,3 +5,7 @@ authors = ["Daniel Kapit", "Greg Bekher"]
 
 [lib]
 crate-type = ["staticlib"]
+
+[dependencies]
+volatile = "0.1.0"
+rlibc = "1.0"
