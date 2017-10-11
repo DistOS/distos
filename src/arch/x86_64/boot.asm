@@ -10,8 +10,8 @@ start:
     call check_cpuid
     call check_long_mode
 
-    call set_up_page_tables ; new
-    call enable_paging     ; new
+    call set_up_page_tables
+    call enable_paging
 
     lgdt [gdt64.pointer]
 
@@ -137,13 +137,6 @@ enable_paging:
 
     ret
 
-gdt64:
-    dq 0 ; zero entry
-.code: equ $ - gdt64 ; new
-    dq (1<<43) | (1<<44) | (1<<47) | (1<<53) ; code segment
-.pointer:
-    dw $ - gdt64 - 1
-    dq gdt64
 
 section .bss
 align 4096
@@ -156,3 +149,13 @@ p2_table:
 stack_bottom:
     resb 64
 stack_top:
+
+
+section .rodata
+gdt64:
+    dq 0 ; zero entry
+.code: equ $ - gdt64 ; new
+    dq (1<<43) | (1<<44) | (1<<47) | (1<<53) ; code segment
+.pointer:
+    dw $ - gdt64 - 1
+    dq gdt64
